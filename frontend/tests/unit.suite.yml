@@ -3,4 +3,6 @@ modules:
     enabled:
         - Yii2:
             part: [orm, email, fixtures]
+            transaction: true
         - Asserts
+#        - \frontend\tests\helpers\MyModule
