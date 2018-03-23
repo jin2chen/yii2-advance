@@ -1,7 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mole
- * Date: 2018/3/21
- * Time: 上午9:12
- */
+
+namespace common\rules;
+
+class UserRule extends BaseRule
+{
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
+
+    public static function status()
+    {
+        return [
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
+}

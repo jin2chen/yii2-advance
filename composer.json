@@ -42,10 +42,5 @@
                 "bower-asset-library": "vendor/bower"
             }
         }
-    },
-    "autoload": {
-        "psr-4": {
-            "mole\\yii\\validators\\": "yii-validators/src"
-        }
     }
 }

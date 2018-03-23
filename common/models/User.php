@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\rules\UserRule;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -23,8 +24,8 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_DELETED = UserRule::STATUS_DELETED;
+    const STATUS_ACTIVE = UserRule::STATUS_ACTIVE;
 
 
     /**
@@ -50,10 +51,13 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function rules()
     {
-        return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-        ];
+        return array_reduce(
+            [
+                UserRule::status()
+            ],
+            'array_merge',
+            []
+        );
     }
 
     /**
@@ -157,6 +161,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Generates password hash from password and sets it to the model
      *
      * @param string $password
+     * @throws \yii\base\Exception
      */
     public function setPassword($password)
     {
@@ -165,6 +170,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
+     *
+     * @throws \yii\base\Exception
      */
     public function generateAuthKey()
     {
@@ -173,6 +180,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
+     *
+     * @throws \yii\base\Exception
      */
     public function generatePasswordResetToken()
     {
