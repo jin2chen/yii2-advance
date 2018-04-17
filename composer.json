@@ -39,6 +39,9 @@
         "codeception/verify": "~1.0"
     },
     "config": {
-        "process-timeout": 1800
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
     }
 }
