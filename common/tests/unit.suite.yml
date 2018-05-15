@@ -7,4 +7,4 @@ modules:
     config:
         Yii2:
             transaction: true
-            cleanup: false
+            cleanup: true
