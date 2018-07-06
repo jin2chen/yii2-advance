@@ -32,6 +32,9 @@ return [
                 ],
             ],
         ],
+        'errorHandler' => [
+            'memoryReserveSize' => 1 * 1024 * 1024
+        ],
     ],
     'params' => $params,
 ];
