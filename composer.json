@@ -53,5 +53,13 @@
         "fxp-asset": {
             "enabled": false
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php ./_phpstorm.php"
+        ],
+        "post-update-cmd": [
+            "@php ./_phpstorm.php"
+        ]
     }
 }

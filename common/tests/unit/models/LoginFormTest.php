@@ -57,7 +57,6 @@ class LoginFormTest extends \Codeception\Test\Unit
             'password' => 'password_0',
         ]);
 
-        Yii::$app->user->enableSession = false;
         expect('model should login user', $model->login())->true();
         expect('error message should not be set', $model->errors)->hasntKey('password');
         expect('user should be logged in', Yii::$app->user->isGuest)->false();
