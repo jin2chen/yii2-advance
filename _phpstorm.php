@@ -7,6 +7,10 @@
  */
 
 $file = './vendor/phpunit/phpunit/src/Util/Printer.php';
+if (!file_exists($file)) {
+    return;
+}
+
 $content = file_get_contents($file);
 $line_fix = 'if (!$out) $out = \'php://stdout\'; ';
 

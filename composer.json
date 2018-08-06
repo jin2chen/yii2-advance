@@ -27,6 +27,10 @@
             "type": "composer",
             "url": "https://asset-packagist.org"
         },
+        "2": {
+            "type": "git",
+            "url": "https://github.com/jinchen-me/php-enum.git"
+        },
         "packagist": {
             "type": "composer",
             "url": "https://packagist.phpcomposer.com"
@@ -38,7 +42,10 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "starlight-bd/yii2-common": "v2.x-dev",
-        "yiisoft/yii2-queue": "^2.0"
+        "jinchen-me/php-enum": "dev-master",
+        "yiisoft/yii2-queue": "^2.0",
+        "hassankhan/config": "^1.0",
+        "vlucas/phpdotenv": "^2.5"
     },
     "require-dev": {
         "zircote/swagger-php": "~2.0",
@@ -47,6 +54,19 @@
         "yiisoft/yii2-faker": "~2.0.0",
         "codeception/codeception": "^2.0",
         "codeception/verify": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "jinchen\\rule\\": "extensions/rule",
+            "common\\": "common",
+            "frontend\\": "frontend",
+            "backend\\": "backend",
+            "console\\": "console",
+            "api\\": "api"
+        },
+        "files": [
+            "extensions/helpers.php"
+        ]
     },
     "config": {
         "process-timeout": 1800,

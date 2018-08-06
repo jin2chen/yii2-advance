@@ -1,7 +1,9 @@
 <?php
 namespace common\models;
 
-use common\rules\UserRule;
+use common\domain\enums\UserStatusEnum;
+use common\domain\rules\UserRule;
+use jinchen\rule\RuleService;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -24,9 +26,19 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = UserRule::STATUS_DELETED;
-    const STATUS_ACTIVE = UserRule::STATUS_ACTIVE;
+    /**
+     * @var RuleService
+     */
+    protected $ruleService;
 
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->ruleService = Yii::$app->get('ruleService');
+    }
 
     /**
      * @inheritdoc
@@ -42,7 +54,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -51,9 +63,11 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function rules()
     {
+        /** @var UserRule $userRule */
+        $userRule = $this->ruleService->get(UserRule::class);
         return array_reduce(
             [
-                UserRule::status()
+                $userRule->status()
             ],
             'array_merge',
             []
@@ -65,7 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => UserStatusEnum::active()->value()]);
     }
 
     /**
@@ -73,6 +87,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
@@ -84,7 +99,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => UserStatusEnum::active()->value()]);
     }
 
     /**
@@ -101,7 +116,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'status' => UserStatusEnum::active()->value(),
         ]);
     }
 
