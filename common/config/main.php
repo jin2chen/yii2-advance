@@ -1,11 +1,14 @@
 <?php
+/** @noinspection SpellCheckingInspection */
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
-    'bootstrap' => ['log', 'queue'],
+    'container' => [
+    ],
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
@@ -25,7 +28,7 @@ return [
             ]
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'traceLevel' => env('APP_LOG_TRACE_LEVEL', 0),
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
@@ -44,6 +47,9 @@ return [
         'ruleService' => [
             'class' => 'jinchen\rule\RuleService',
         ],
+        'config' => function () {
+            return new \Noodlehaus\Config(__DIR__ . '/params.php');
+        },
         'queue' => [
             'class' => 'yii\queue\db\Queue',
             'mutex' => 'yii\mutex\MysqlMutex',

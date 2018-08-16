@@ -25,6 +25,7 @@ class PdoController extends Controller
             'password' => Yii::$app->db->password,
             'charset' => Yii::$app->db->charset,
         ]);
+        /** @noinspection PhpUnhandledExceptionInspection */
         $unbufferedDb->open();
         $unbufferedDb->pdo->setAttribute(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, false);
 
@@ -45,6 +46,7 @@ class PdoController extends Controller
                 'password' => Yii::$app->db->password,
                 'charset' => Yii::$app->db->charset,
             ]);
+            /** @noinspection PhpUnhandledExceptionInspection */
             $db->open();
             $all[] = $db;
             sleep(5);

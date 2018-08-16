@@ -68,6 +68,11 @@
             "extensions/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "api\\tests\\": "api/tests"
+        }
+    },
     "config": {
         "process-timeout": 1800,
         "fxp-asset": {

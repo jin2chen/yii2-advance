@@ -2,13 +2,13 @@
 
 namespace console\controllers;
 
-use common\models\User;
+use common\domain\enums\UserStatusEnum;
 use Faker\Factory;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\console\Controller;
 use yii\db\Connection;
 use yii\di\Instance;
-use yii\helpers\VarDumper;
 
 class FakerController extends Controller
 {
@@ -28,6 +28,7 @@ class FakerController extends Controller
 
     /**
      * @inheritdoc
+     * @throws InvalidConfigException
      */
     public function init()
     {
@@ -53,16 +54,19 @@ class FakerController extends Controller
         for ($i = 0; $i < $count; $i++) {
             $faker = $this->generator();
             $timestamp = time();
+            /** @noinspection PhpUnhandledExceptionInspection */
             $row = [
-                'username' => $faker->userName,
+                'username' => $faker->unique()->userName,
                 'auth_key' => Yii::$app->security->generateRandomString(),
                 'password_hash' => '$2y$13$IpbH0O72.7cTgIOC2OvoHuQUky4Q3WkMI6CRjg.1IFxNyP6.VbdkG',
                 'password_reset_token' => Yii::$app->security->generateRandomString(),
                 'email' => $faker->unique()->email,
-                'status' => User::STATUS_ACTIVE,
+                'status' => UserStatusEnum::active()->value(),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
             ];
+
+            /** @noinspection PhpUnhandledExceptionInspection */
             $this->db->createCommand()->insert('user', $row)->execute();
         }
     }

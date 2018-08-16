@@ -54,6 +54,6 @@ class PasswordResetRequestFormTest extends \Codeception\Test\Unit
         $emailMessage = $this->tester->grabLastSentEmail();
         expect('valid email is sent', $emailMessage)->isInstanceOf('yii\mail\MessageInterface');
         expect($emailMessage->getTo())->hasKey($model->email);
-        expect($emailMessage->getFrom())->hasKey(Yii::$app->params['supportEmail']);
+        expect($emailMessage->getFrom())->hasKey(Yii::$app->config->get('supportEmail'));
     }
 }

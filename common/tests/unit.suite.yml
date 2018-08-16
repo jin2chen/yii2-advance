@@ -4,6 +4,7 @@ modules:
     enabled:
         - Yii2:
             part: fixtures
+        - \common\tests\Helper\Unit
     config:
         Yii2:
             transaction: true

@@ -1,47 +1,52 @@
 <?php
 
-$config = [
-    'id' => 'app-frontend',
-    'name' => env('FRONTEND_NAME'),
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'controllerNamespace' => 'frontend\controllers',
-    'components' => [
-        'request' => [
-            'csrfParam' => 'fcsrf',
-            'csrfCookie' => [
-                'httpOnly' => true,
-                'secure' => COOKIE_SECURE,
+use yii\helpers\ArrayHelper;
+
+$config = ArrayHelper::merge(
+    require __DIR__ . '/../../common/config/main.php',
+    [
+        'id' => 'app-frontend',
+        'name' => env('FRONTEND_NAME'),
+        'basePath' => dirname(__DIR__),
+        'bootstrap' => ['log'],
+        'controllerNamespace' => 'frontend\controllers',
+        'components' => [
+            'request' => [
+                'csrfParam' => 'fcsrf',
+                'csrfCookie' => [
+                    'httpOnly' => true,
+                    'secure' => COOKIE_SECURE,
+                ],
+                'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY'),
             ],
-            'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY'),
-        ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => false,
-            'identityCookie' => [
-                'name' => 'fuid',
-                'httpOnly' => true,
-                'secure' => COOKIE_SECURE,
+            'user' => [
+                'identityClass' => 'common\models\User',
+                'enableAutoLogin' => false,
+                'identityCookie' => [
+                    'name' => 'fuid',
+                    'httpOnly' => true,
+                    'secure' => COOKIE_SECURE,
+                ],
+            ],
+            'session' => [
+                'name' => 'fsid',
+                'cookieParams' => [
+                    'httpOnly' => true,
+                    'secure' => COOKIE_SECURE,
+                ]
+            ],
+            'errorHandler' => [
+                'errorAction' => 'site/error',
+            ],
+            'urlManager' => [
+                'enablePrettyUrl' => true,
+                'showScriptName' => false,
+                'rules' => [
+                ],
             ],
         ],
-        'session' => [
-            'name' => 'fsid',
-            'cookieParams' => [
-                'httpOnly' => true,
-                'secure' => COOKIE_SECURE,
-            ]
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-    ],
-];
+    ]
+);
 
 if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
