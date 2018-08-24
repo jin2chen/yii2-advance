@@ -51,6 +51,7 @@ class FakerController extends Controller
 
     public function actionUser($count = 1)
     {
+        ini_set('memory_limit', '2G');
         for ($i = 0; $i < $count; $i++) {
             $faker = $this->generator();
             $timestamp = time();
@@ -60,7 +61,7 @@ class FakerController extends Controller
                 'auth_key' => Yii::$app->security->generateRandomString(),
                 'password_hash' => '$2y$13$IpbH0O72.7cTgIOC2OvoHuQUky4Q3WkMI6CRjg.1IFxNyP6.VbdkG',
                 'password_reset_token' => Yii::$app->security->generateRandomString(),
-                'email' => $faker->unique()->email,
+                'email' => $faker->unique()->firstName . '@jinchen.me',
                 'status' => UserStatusEnum::active()->value(),
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp,
