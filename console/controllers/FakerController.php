@@ -51,7 +51,7 @@ class FakerController extends Controller
 
     public function actionUser($count = 1)
     {
-        ini_set('memory_limit', '2G');
+        ini_set('memory_limit', -1);
         for ($i = 0; $i < $count; $i++) {
             $faker = $this->generator();
             $timestamp = time();

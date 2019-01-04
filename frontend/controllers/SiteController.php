@@ -1,17 +1,19 @@
 <?php
 namespace frontend\controllers;
 
-use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
+use yii\base\InvalidArgumentException;
+use yii\captcha\CaptchaAction;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -127,6 +129,7 @@ class SiteController extends Controller
 
             return $this->refresh();
         } else {
+//            sleep(15);
             return $this->render('contact', [
                 'model' => $model,
             ]);
@@ -212,5 +215,14 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionGetCaptcha()
+    {
+        $action = new CaptchaAction('captcha', $this);
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+            'captcha' => $action->getVerifyCode()
+        ];
     }
 }
