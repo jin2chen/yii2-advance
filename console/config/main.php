@@ -25,6 +25,10 @@ $config = ArrayHelper::merge(
             'errorHandler' => [
                 'memoryReserveSize' => 1 * 1024 * 1024
             ],
+            'urlManager' => [
+                'scriptUrl' => '/index.php',
+                'hostInfo' => 'http://jinchen.me',
+            ]
         ],
     ]
 );

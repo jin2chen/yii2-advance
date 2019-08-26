@@ -1,6 +1,10 @@
 <?php
 /** @noinspection SpellCheckingInspection */
 
+use Noodlehaus\Config;
+use yii\queue\db\Queue;
+use yii\queue\ExecEvent;
+
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'aliases' => [
@@ -39,7 +43,16 @@ return [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => true,
             'viewPath' => '@common/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => env('MAIL_SMTP_HOST'),
+                'username' => env('MAIL_SMTP_USER'),
+                'password' => env('MAIL_SMTP_PASSWORD'),
+                'port' => '587',
+                'encryption' => 'tls',
+            ]
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -48,14 +61,14 @@ return [
             'class' => 'jinchen\rule\RuleService',
         ],
         'config' => function () {
-            return new \Noodlehaus\Config(__DIR__ . '/params.php');
+            return new Config(__DIR__ . '/params.php');
         },
         'queue' => [
             'class' => 'yii\queue\db\Queue',
             'mutex' => 'yii\mutex\MysqlMutex',
             'deleteReleased' => false,
-            'on afterError' => function (\yii\queue\ExecEvent $event) {
-                /** @var \yii\queue\db\Queue $queue */
+            'on afterError' => function (ExecEvent $event) {
+                /** @var Queue $queue */
                 $queue = Yii::$app->get('queue');
                 Yii::$app->db->createCommand()
                     ->update(
