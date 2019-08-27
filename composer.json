@@ -19,10 +19,6 @@
     },
     "minimum-stability": "stable",
     "repositories": {
-        "0": {
-            "type": "git",
-            "url": "https://github.com/starlight-bd/yii2-common.git"
-        },
         "1": {
             "type": "composer",
             "url": "https://asset-packagist.org"
@@ -41,7 +37,6 @@
         "yiisoft/yii2": "~2.0.0",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "starlight-bd/yii2-common": "v2.x-dev",
         "jinchen-me/php-enum": "dev-master",
         "yiisoft/yii2-queue": "^2.0",
         "hassankhan/config": "^1.0",
