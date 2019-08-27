@@ -53,6 +53,7 @@
     "autoload": {
         "psr-4": {
             "jinchen\\rule\\": "extensions/rule",
+            "PBergman\\": "extensions/pbergman",
             "common\\": "common",
             "frontend\\": "frontend",
             "backend\\": "backend",
